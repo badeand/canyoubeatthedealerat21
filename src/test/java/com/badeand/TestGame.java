@@ -20,6 +20,11 @@ public class TestGame {
     }
 
     @Test
+    public void bothPlayersAreBust() {
+        testGame("CA,DA,HA,SA", "dealer");
+    }
+
+    @Test
     public void dealerWinsIfSamIsBust() {
         testGame("CA,C10, DA, DA, C2,S2,C2,S4,C3,S2,C2,S2,C2,S2", "dealer");
     }
