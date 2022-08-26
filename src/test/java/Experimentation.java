@@ -8,33 +8,33 @@ import org.junit.Test;
 public class Experimentation {
 
     @Test
-    public void test1() {
+    public void randomGame() {
         testGame("C1,CA, S7, D5, C1,S1,C1,S4,C3,S2,C1,S1,C1,S1", "dealer");
     }
 
     @Test
-    public void test2() {
-        testGame("S10,C10,CA,C10,D4,C10,C10", "sam");
+    public void samWinsIfDealerIsBust() {
+        testGame("S5,C10,S5,C5,S9,CQ,C10", "sam");
     }
 
     @Test
-    public void test3() {
+    public void dealerWinsIfSamIsBust() {
         testGame("CA,C10, DA, DA, C1,S1,C1,S4,C3,S2,C1,S1,C1,S1", "dealer");
     }
 
     @Test
-    public void test4() {
+    public void samWinsIfBlackjackOnInitialHand() {
         testGame("CA,C9,C10,C8", "sam");
     }
 
     @Test
-    public void test5() {
+    public void dealerWinsIfBlackjackOnInitialHand() {
         testGame("C9,CA,C8,C10", "dealer");
     }
 
     @Test
-    public void test6() {
-        testGame("C1,CA, S7, D5, C1,S1,C1,S4,C3,S2,C1,S1,C1,S1", "dealer");
+    public void samWinsIfBotHasBlackjackOnInitialHand() {
+        testGame("CA,DA,C10,D10", "sam");
     }
 
     private void testGame(String list, String player) {
