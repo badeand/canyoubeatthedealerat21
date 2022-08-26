@@ -1,34 +1,43 @@
 class Game {
-    final Player sam    = new Player("sam");
-    final Player dealer = new Player("dealer");
-    Player     winner = null;
+    final Player     sam    = new Player("sam");
+    final Player     dealer = new Player("dealer");
     final CardBundle cardBundle;
+    Player winner = null;
 
     Game(CardBundle cardBundle) {
         this.cardBundle = cardBundle;
     }
 
+    // TODO: Winner is optinoal return
     void playGame() {
         sam.deal(cardBundle.pop());
         dealer.deal(cardBundle.pop());
         sam.deal(cardBundle.pop());
         dealer.deal(cardBundle.pop());
 
-        while (sam.sumValue() < 17) {
-            Card card = cardBundle.pop();
-            sam.deal(card);
+        if(sam.hasBlackjack()) {
+            winner = sam;
+            return;
         }
 
-        while (dealer.sumValue() <= sam.sumValue()) {
-            Card card = cardBundle.pop();
-            dealer.deal(card);
+        if(dealer.hasBlackjack()) {
+            winner = dealer;
+            return;
         }
 
-        if (sam.sumValue() > dealer.sumValue()) {
+        while (sam.sumValue() < 17 && !sam.isBust()) {
+            sam.deal(cardBundle.pop());
+        }
+
+        while (dealer.sumValue() <= sam.sumValue() && !dealer.isBust() && dealer.sumValue() < 21) {
+            dealer.deal(cardBundle.pop());
+        }
+
+        if (!sam.isBust() && sam.sumValue() > (!dealer.isBust() ? dealer.sumValue() : -1)) {
             winner = sam;
         }
 
-        if (dealer.sumValue() > sam.sumValue()) {
+        if (!dealer.isBust() && dealer.sumValue() > (!sam.isBust() ? sam.sumValue() : -1)) {
             winner = dealer;
         }
     }

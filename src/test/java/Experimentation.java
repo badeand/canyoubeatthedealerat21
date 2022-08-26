@@ -8,12 +8,40 @@ import org.junit.Test;
 public class Experimentation {
 
     @Test
-    public void testGame() {
-        String s = "C1,CA, S7, D5, C1,S1,C1,S4,C3,S2,C1,S1,C1,S1";
-        List<Card> cards = CardBundle.cardsFromStringList(s);
+    public void test1() {
+        testGame("C1,CA, S7, D5, C1,S1,C1,S4,C3,S2,C1,S1,C1,S1", "dealer");
+    }
+
+    @Test
+    public void test2() {
+        testGame("S10,C10,CA,C10,D4,C10,C10", "sam");
+    }
+
+    @Test
+    public void test3() {
+        testGame("CA,C10, DA, DA, C1,S1,C1,S4,C3,S2,C1,S1,C1,S1", "dealer");
+    }
+
+    @Test
+    public void test4() {
+        testGame("CA,C9,C10,C8", "sam");
+    }
+
+    @Test
+    public void test5() {
+        testGame("C9,CA,C8,C10", "dealer");
+    }
+
+    @Test
+    public void test6() {
+        testGame("C1,CA, S7, D5, C1,S1,C1,S4,C3,S2,C1,S1,C1,S1", "dealer");
+    }
+
+    private void testGame(String list, String player) {
+        List<Card> cards = CardBundle.cardsFromStringList(list);
         Game game = new Game(new CardBundle(cards));
         game.playGame();
-        assertEquals(game.dealer, game.winner);
+        assertEquals(player, game.winner.getName());
     }
 
     @Test
