@@ -1,8 +1,8 @@
 class Game {
-    Player     sam    = new Player("sam");
-    Player     dealer = new Player("dealer");
+    final Player sam    = new Player("sam");
+    final Player dealer = new Player("dealer");
     Player     winner = null;
-    CardBundle cardBundle;
+    final CardBundle cardBundle;
 
     Game(CardBundle cardBundle) {
         this.cardBundle = cardBundle;

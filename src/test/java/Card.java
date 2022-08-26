@@ -1,6 +1,6 @@
 class Card {
-    Suit   suit;
-    String value;
+    final Suit   suit;
+    final String value;
 
     public Card(Suit suit, String value) {
         this.suit = suit;
@@ -9,7 +9,7 @@ class Card {
     }
 
     static Card cardFromValue(String s) {
-        String substring = s.substring(1, s.length());
+        String substring = s.substring(1);
         return new Card(Suit.valueOf(s.substring(0, 1)), substring);
     }
 

@@ -1,4 +1,5 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -49,12 +50,12 @@ public class Experimentation {
         {
             Player player = new Player("ken");
             player.dealCards(CardBundle.cardsFromStringList("CA,HA"));
-            assertEquals(true, player.isBust());
+            assertTrue(player.isBust());
         }
         {
             Player player = new Player("dealer");
             player.dealCards(CardBundle.cardsFromStringList("DQ,HA"));
-            assertEquals(true, player.hasBlackjack());
+            assertTrue(player.hasBlackjack());
         }
 
         {
@@ -79,19 +80,19 @@ public class Experimentation {
             assertEquals(8, sam.sumValue());
             assertEquals(16, dealer.sumValue());
 
-            System.out.println(String.format("sam has: %s", sam.sumValue()));
+            System.out.printf("sam has: %s%n", sam.sumValue());
             while (sam.sumValue() < 17) {
                 Card card = cardBundle.pop();
                 sam.deal(card);
-                System.out.println(String.format("sam gets card: %s, has: %s", card.formatAsString(), sam.sumValue()));
+                System.out.printf("sam gets card: %s, has: %s%n", card.formatAsString(), sam.sumValue());
             }
             assertEquals(18, sam.sumValue());
 
-            System.out.println(String.format("dealer has: %s", dealer.sumValue()));
+            System.out.printf("dealer has: %s%n", dealer.sumValue());
             while (dealer.sumValue() <= sam.sumValue()) {
                 Card card = cardBundle.pop();
                 dealer.deal(card);
-                System.out.println(String.format("dealer gets card: %s, has: %s", card.formatAsString(), dealer.sumValue()));
+                System.out.printf("dealer gets card: %s, has: %s%n", card.formatAsString(), dealer.sumValue());
             }
             assertEquals(18, sam.sumValue());
 
@@ -105,7 +106,7 @@ public class Experimentation {
                 winner = dealer;
             }
 
-            System.out.println(String.format("Winner: %s", winner != null ? winner.getName() : "tie"));
+            System.out.printf("Winner: %s%n", winner != null ? winner.getName() : "tie");
         }
     }
 }

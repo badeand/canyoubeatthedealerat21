@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 class CardBundle {
 
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public CardBundle(List<Card> cards) {
         this.cards = cards;
@@ -18,15 +18,16 @@ class CardBundle {
     }
 
     static String cardsToString(List<Card> cards1) {
-        String collect = cards1.stream().map(card -> card.formatAsString()).collect(Collectors.joining(", "));
-        return collect;
+        return cards1.stream()
+                .map(Card::formatAsString)
+                .collect(Collectors.joining(", "));
     }
 
     static List<Card> cardsFromStringList(String s) {
-        List<String> strings = Arrays.stream(s.split(",")).map(s1 -> s1.trim().toUpperCase(Locale.ROOT)).collect(Collectors.toList());
-        List<Card> cards1 = strings.stream().map(s1 -> Card.cardFromValue(s1)).collect(Collectors.toList());
-        List<Card> cards = cards1;
-        return cards;
+        return Arrays.stream(s.split(","))
+                .map(s1 -> s1.trim().toUpperCase(Locale.ROOT))
+                .map(Card::cardFromValue)
+                .collect(Collectors.toList());
     }
 
     public void addCard(Card card) {
@@ -36,7 +37,7 @@ class CardBundle {
     public int sumValue() {
         // TODO: Use reduce
         AtomicInteger sum = new AtomicInteger();
-        cards.stream().forEach(card -> sum.addAndGet(card.value()));
+        cards.forEach(card -> sum.addAndGet(card.value()));
         return sum.get();
     }
 

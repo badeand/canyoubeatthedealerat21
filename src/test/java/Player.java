@@ -2,16 +2,12 @@ import java.util.List;
 
 class Player {
 
-    private String     name;
+    private final String     name;
     //TODO: To deck/ card collection
-    private CardBundle cardBundle = new CardBundle();
+    private final CardBundle cardBundle = new CardBundle();
 
     public Player(String name) {
         this.name = name;
-    }
-
-    public CardBundle getCardBundle() {
-        return cardBundle;
     }
 
     public String getName() {
@@ -23,7 +19,7 @@ class Player {
     }
 
     void dealCards(List<Card> newCards) {
-        newCards.stream().forEach(card -> deal(card));
+        newCards.forEach(this::deal);
     }
 
     public boolean isBust() {
