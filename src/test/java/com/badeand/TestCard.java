@@ -14,37 +14,27 @@ public class TestCard {
 
     @Test
     public void unknownSuit() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            Card.cardFromValue("X7");
-        });
+        assertThrows(IllegalArgumentException.class, () -> Card.cardFromValue("X7"));
     }
 
     @Test
     public void tooLowValue() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            Card.cardFromValue("D0");
-        });
+        assertThrows(IllegalArgumentException.class, () -> Card.cardFromValue("D0"));
     }
 
     @Test
     public void tooHighValue1() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            Card.cardFromValue("D11");
-        });
+        assertThrows(IllegalArgumentException.class, () -> Card.cardFromValue("D11"));
     }
 
     @Test
     public void tooHighValue2() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            Card.cardFromValue("D99999");
-        });
+        assertThrows(IllegalArgumentException.class, () -> Card.cardFromValue("D99999"));
     }
 
     @Test
     public void IllegalValue() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            Card.cardFromValue("DX");
-        });
+        assertThrows(IllegalArgumentException.class, () -> Card.cardFromValue("DX"));
     }
 
     @Test

@@ -2,7 +2,6 @@ package com.badeand;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -42,9 +41,7 @@ public class TestGame {
 
     @Test
     public void testPopExceptionOnEmptyDeck() {
-        assertThrows(RuntimeException.class, () -> {
-            new CardBundle().pop();
-        });
+        assertThrows(RuntimeException.class, () -> new CardBundle().pop());
     }
 
     private void testGame(String list, String player) {
