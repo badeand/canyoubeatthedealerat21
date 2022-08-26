@@ -3,12 +3,28 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import org.junit.Test;
 
 public class Experimentation {
+
+    List<Card> cardsFromStringList(String s) {
+        List<String> strings = Arrays.stream(s.split(",")).map(s1 -> s1.trim().toUpperCase(Locale.ROOT)).collect(Collectors.toList());
+        List<Card> cards = cardsFromValues(strings);
+        return cards;
+    }
+
+    @Test
+    public void testGame() {
+        String s = "C1,CA, S7, D5, C1,S1,C1,S4,C3,S2,C1,S1,C1,S1";
+        List<Card> cards = cardsFromStringList(s);
+        Game game = new Game(new Deck(cards));
+        game.playGame();
+        assertEquals(game.dealer, game.winner);
+    }
 
     @Test
     public void demoTestMethod() {
@@ -24,36 +40,36 @@ public class Experimentation {
 
         {
             Player player = new Player("sam");
-            player.dealCards(cardsFromValues(new String[]{"C7", "SK"}));
+            player.dealCards(cardsFromStringList("C7,SK"));
             assertEquals(17, player.sumValue());
             assertEquals("sam: C7, SK", player.formatCards());
         }
 
         {
             Player player = new Player("sam");
-            player.dealCards(cardsFromValues(new String[]{"C7", "SK", "D5"}));
+            player.dealCards(cardsFromStringList("C7,SK,D5"));
             assertEquals("sam: C7, SK, D5", player.formatCards());
         }
 
         {
             Player player = new Player("sam");
-            player.dealCards(cardsFromValues(new String[]{"H9"}));
+            player.dealCards(cardsFromStringList("H9"));
             assertEquals("sam: H9", player.formatCards());
         }
 
         {
             Player player = new Player("ken");
-            player.dealCards(cardsFromValues(new String[]{"CA", "HA"}));
+            player.dealCards(cardsFromStringList("CA,HA"));
             assertEquals(true, player.isBust());
         }
         {
             Player player = new Player("dealer");
-            player.dealCards(cardsFromValues(new String[]{"DQ", "HA"}));
+            player.dealCards(cardsFromStringList("DQ,HA"));
             assertEquals(true, player.hasBlackjack());
         }
 
         {
-            Deck deck = new Deck(cardsFromValues(new String[]{"C1", "CA", "S7", "D5"}));
+            Deck deck = new Deck(cardsFromStringList("C1,CA,S7,D5"));
             assertEquals("C1, CA, S7, D5", cardsToString(deck.getCards()));
 
             assertEquals("C1", deck.pop().formatAsString());
@@ -64,7 +80,7 @@ public class Experimentation {
         }
 
         {
-            Deck deck = new Deck(cardsFromValues(new String[]{"C1", "CA", "S7", "D5", "C1", "S1", "C1", "S4", "C3", "S2", "C1", "S1", "C1", "S1"}));
+            Deck deck = new Deck(cardsFromStringList("C1,CA,S7,D5,C1,S1,C1,S4,C3,S2,C1,S1,C1,S1"));
             Player sam = new Player("sam");
             Player dealer = new Player("dealer");
             sam.deal(deck.pop());
@@ -104,8 +120,8 @@ public class Experimentation {
         }
     }
 
-    private List<Card> cardsFromValues(String[] strings) {
-        List<Card> cards = Arrays.stream(strings).map(s -> cardFromValue(s)).collect(Collectors.toList());
+    private List<Card> cardsFromValues(List<String> strings) {
+        List<Card> cards = strings.stream().map(s -> cardFromValue(s)).collect(Collectors.toList());
         return cards;
     }
 
@@ -123,6 +139,42 @@ public class Experimentation {
         C, D, H, S
     }
 
+    class Game {
+        Player sam    = new Player("sam");
+        Player dealer = new Player("dealer");
+        Player winner = null;
+        Deck   deck;
+
+        Game(Deck deck) {
+            this.deck = deck;
+        }
+
+        void playGame() {
+            sam.deal(deck.pop());
+            dealer.deal(deck.pop());
+            sam.deal(deck.pop());
+            dealer.deal(deck.pop());
+
+            while (sam.sumValue() < 17) {
+                Card card = deck.pop();
+                sam.deal(card);
+            }
+
+            while (dealer.sumValue() <= sam.sumValue()) {
+                Card card = deck.pop();
+                dealer.deal(card);
+            }
+
+            if (sam.sumValue() > dealer.sumValue()) {
+                winner = sam;
+            }
+
+            if (dealer.sumValue() > sam.sumValue()) {
+                winner = dealer;
+            }
+        }
+    }
+
     class Deck {
 
         private List<Card> cards;
@@ -136,7 +188,6 @@ public class Experimentation {
         }
 
         public Card pop() {
-
             if (cards.size() > 0) {
                 Card poppedCard = cards.get(0);
                 cards.remove(poppedCard);
@@ -151,6 +202,7 @@ public class Experimentation {
     class Player {
 
         private String     name;
+        //TODO: To deck/ card collection
         private List<Card> cards = new ArrayList<>();
 
         public Player(String name) {
