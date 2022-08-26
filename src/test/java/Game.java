@@ -1,6 +1,6 @@
 class Game {
-    Player sam    = new Player("sam");
-    Player dealer = new Player("dealer");
+    Player     sam    = new Player("sam");
+    Player     dealer = new Player("dealer");
     Player     winner = null;
     CardBundle cardBundle;
 

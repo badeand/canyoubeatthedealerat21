@@ -1,15 +1,17 @@
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 class Player {
 
     private String     name;
     //TODO: To deck/ card collection
-    private List<Card> cards = new ArrayList<>();
+    private CardBundle cardBundle = new CardBundle();
 
     public Player(String name) {
         this.name = name;
+    }
+
+    public CardBundle getCardBundle() {
+        return cardBundle;
     }
 
     public String getName() {
@@ -17,30 +19,27 @@ class Player {
     }
 
     void deal(Card card) {
-        cards.add(card);
+        cardBundle.addCard(card);
     }
 
     void dealCards(List<Card> newCards) {
         newCards.stream().forEach(card -> deal(card));
     }
 
-    public int sumValue() {
-        // TODO: Use reduce
-        AtomicInteger sum = new AtomicInteger();
-        cards.stream().forEach(card -> sum.addAndGet(card.value()));
-        return sum.get();
-    }
-
     public boolean isBust() {
-        return sumValue() > 21;
+        return cardBundle.sumValue() > 21;
     }
 
     public boolean hasBlackjack() {
-        return sumValue() == 21;
+        return cardBundle.sumValue() == 21;
     }
 
     public String formatCards() {
-        String collect = CardBundle.cardsToString(cards);
+        String collect = cardBundle.formatAsString();
         return String.format("%s: %s", name, collect);
+    }
+
+    public int sumValue() {
+        return cardBundle.sumValue();
     }
 }
