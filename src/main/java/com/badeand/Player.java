@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Player {
 
-    private final String     name;
-    //TODO: To deck/ card collection
+    private final String name;
+
     private final CardBundle cardBundle = new CardBundle();
 
     public Player(String name) {
