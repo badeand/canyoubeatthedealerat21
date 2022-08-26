@@ -1,26 +1,32 @@
-class Game {
+package com.badeand;
+
+public class Game {
     final Player     sam    = new Player("sam");
     final Player     dealer = new Player("dealer");
     final CardBundle cardBundle;
     Player winner = null;
 
-    Game(CardBundle cardBundle) {
+    public Game(CardBundle cardBundle) {
         this.cardBundle = cardBundle;
     }
 
+    public Player getWinner() {
+        return winner;
+    }
+
     // TODO: Winner is optinoal return
-    void playGame() {
+    public void playGame() {
         sam.deal(cardBundle.pop());
         dealer.deal(cardBundle.pop());
         sam.deal(cardBundle.pop());
         dealer.deal(cardBundle.pop());
 
-        if(sam.hasBlackjack()) {
+        if (sam.hasBlackjack()) {
             winner = sam;
             return;
         }
 
-        if(dealer.hasBlackjack()) {
+        if (dealer.hasBlackjack()) {
             winner = dealer;
             return;
         }

@@ -1,6 +1,8 @@
+package com.badeand;
+
 import java.util.List;
 
-class Player {
+public class Player {
 
     private final String     name;
     //TODO: To deck/ card collection
@@ -14,11 +16,11 @@ class Player {
         return name;
     }
 
-    void deal(Card card) {
+    public void deal(Card card) {
         cardBundle.addCard(card);
     }
 
-    void dealCards(List<Card> newCards) {
+    public void dealCards(List<Card> newCards) {
         newCards.forEach(this::deal);
     }
 

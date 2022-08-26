@@ -1,3 +1,5 @@
+package com.badeand;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -5,7 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-public class Experimentation {
+public class TestGame {
 
     @Test
     public void randomGame() {
@@ -41,7 +43,7 @@ public class Experimentation {
         List<Card> cards = CardBundle.cardsFromStringList(list);
         Game game = new Game(new CardBundle(cards));
         game.playGame();
-        assertEquals(player, game.winner.getName());
+        assertEquals(player, game.getWinner().getName());
     }
 
     @Test

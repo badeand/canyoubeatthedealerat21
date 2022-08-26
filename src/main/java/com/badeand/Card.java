@@ -1,4 +1,6 @@
-class Card {
+package com.badeand;
+
+public class Card {
     final Suit   suit;
     final String value;
 
@@ -8,12 +10,12 @@ class Card {
         this.value = value;
     }
 
-    static Card cardFromValue(String s) {
+    public static Card cardFromValue(String s) {
         String substring = s.substring(1);
         return new Card(Suit.valueOf(s.substring(0, 1)), substring);
     }
 
-    int value() {
+    public int value() {
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {

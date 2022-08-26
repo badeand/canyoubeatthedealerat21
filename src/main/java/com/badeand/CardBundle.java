@@ -1,3 +1,5 @@
+package com.badeand;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -5,7 +7,7 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-class CardBundle {
+public class CardBundle {
 
     private final List<Card> cards;
 
@@ -17,13 +19,13 @@ class CardBundle {
         this.cards = new ArrayList<>();
     }
 
-    static String cardsToString(List<Card> cards1) {
+    public static String cardsToString(List<Card> cards1) {
         return cards1.stream()
                 .map(Card::formatAsString)
                 .collect(Collectors.joining(", "));
     }
 
-    static List<Card> cardsFromStringList(String s) {
+    public static List<Card> cardsFromStringList(String s) {
         return Arrays.stream(s.split(","))
                 .map(s1 -> s1.trim().toUpperCase(Locale.ROOT))
                 .map(Card::cardFromValue)
