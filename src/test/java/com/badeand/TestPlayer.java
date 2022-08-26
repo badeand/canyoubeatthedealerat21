@@ -15,28 +15,28 @@ public class TestPlayer {
 
     public void formatCardsForPlayer(String s, String expected) {
         Player player = new Player("sam");
-        player.dealCards(CardBundle.cardsFromStringList(s));
+        player.dealCards(CardBundle.cardsFromStringList(s).getCards());
         assertEquals(expected, player.formatCards());
     }
 
     @Test
     public void playerHasBlackjack() {
         Player player = new Player("dealer");
-        player.dealCards(CardBundle.cardsFromStringList("DQ,HA"));
+        player.dealCards(CardBundle.cardsFromStringList("DQ,HA").getCards());
         assertTrue(player.hasBlackjack());
     }
 
     @Test
     public void playerIsBust() {
         Player player = new Player("ken");
-        player.dealCards(CardBundle.cardsFromStringList("CA,HA"));
+        player.dealCards(CardBundle.cardsFromStringList("CA,HA").getCards());
         assertTrue(player.isBust());
     }
 
     @Test
     public void calculateCardValues() {
         Player player = new Player("sam");
-        player.dealCards(CardBundle.cardsFromStringList("C7,SK"));
+        player.dealCards(CardBundle.cardsFromStringList("C7,SK").getCards());
         assertEquals(17, player.sumValue());
     }
 }

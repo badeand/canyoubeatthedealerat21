@@ -3,8 +3,6 @@ package com.badeand;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-import java.util.List;
-
 import org.junit.Test;
 
 public class TestGame {
@@ -45,8 +43,7 @@ public class TestGame {
     }
 
     private void testGame(String list, String player) {
-        List<Card> cards = CardBundle.cardsFromStringList(list);
-        Game game = new Game(new CardBundle(cards));
+        Game game = new Game(CardBundle.cardsFromStringList(list));
         game.playGame();
         assertEquals(player, game.getWinner().getName());
     }
