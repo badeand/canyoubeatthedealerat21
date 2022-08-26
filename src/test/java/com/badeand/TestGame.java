@@ -3,6 +3,8 @@ package com.badeand;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
+import java.util.Optional;
+
 import org.junit.Test;
 
 public class TestGame {
@@ -44,7 +46,7 @@ public class TestGame {
 
     private void testGame(String list, String player) {
         Game game = new Game(CardBundle.cardsFromStringList(list));
-        game.playGame();
-        assertEquals(player, game.getWinner().getName());
+        Optional<Player> winner = game.playGame();
+        assertEquals(player, winner.orElseThrow(() -> new RuntimeException("no winner")).getName());
     }
 }
