@@ -8,9 +8,9 @@ public class TestCardBundle {
 
     @Test
     public void popCardBundle() {
-        CardBundle cardBundle = new CardBundle(CardBundle.cardsFromStringList("C1,CA,S7,D5"));
-        assertEquals("C1, CA, S7, D5", CardBundle.cardsToString(cardBundle.getCards()));
-        assertEquals("C1", cardBundle.pop().formatAsString());
+        CardBundle cardBundle = new CardBundle(CardBundle.cardsFromStringList("C2,CA,S7,D5"));
+        assertEquals("C2, CA, S7, D5", CardBundle.cardsToString(cardBundle.getCards()));
+        assertEquals("C2", cardBundle.pop().formatAsString());
         assertEquals("CA, S7, D5", CardBundle.cardsToString(cardBundle.getCards()));
         cardBundle.pop();
         assertEquals("S7, D5", CardBundle.cardsToString(cardBundle.getCards()));
@@ -19,4 +19,13 @@ public class TestCardBundle {
         cardBundle.pop();
         assertEquals(0, cardBundle.getCards().size());
     }
+
+    @Test
+    public void shuffeledDeck() {
+        CardBundle cardBundle = CardBundle.shuffeledDeck();
+        assertEquals(52, cardBundle.getCards().size());
+        assertEquals(380, cardBundle.sumValue());
+    }
+
+
 }

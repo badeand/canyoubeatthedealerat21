@@ -17,7 +17,7 @@ public class Card {
     public int calcValue() {
         try {
             int integerValue = Integer.parseInt(value);
-            if (integerValue > 0 && integerValue <= 10) {
+            if (integerValue >= 2 && integerValue <= 10) {
                 return integerValue;
             } else {
                 throw new IllegalArgumentException(String.format("Illegal value: %s", value));

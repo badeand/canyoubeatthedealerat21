@@ -10,8 +10,8 @@ import org.junit.Test;
 public class TestGame {
 
     @Test
-    public void randomGame() {
-        testGame("C1,CA, S7, D5, C1,S1,C1,S4,C3,S2,C1,S1,C1,S1", "dealer");
+    public void exampleInText() {
+        testGame("CA,D5,H9,HQ,S8", "sam");
     }
 
     @Test
@@ -21,7 +21,7 @@ public class TestGame {
 
     @Test
     public void dealerWinsIfSamIsBust() {
-        testGame("CA,C10, DA, DA, C1,S1,C1,S4,C3,S2,C1,S1,C1,S1", "dealer");
+        testGame("CA,C10, DA, DA, C2,S2,C2,S4,C3,S2,C2,S2,C2,S2", "dealer");
     }
 
     @Test
@@ -50,6 +50,4 @@ public class TestGame {
         game.playGame();
         assertEquals(player, game.getWinner().getName());
     }
-
-
 }
