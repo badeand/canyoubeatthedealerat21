@@ -16,7 +16,7 @@ public class Main {
                 deck = CardBundle.cardsFromStringList(new String(bytes));
                 System.out.printf("Loaded file: '%s' containing %s cards%n", deckFilename, deck.getCards().size());
             } catch (Throwable t) {
-                System.err.printf("Unable to read file '%s'. Error: %s%n", deckFilename, t.toString());
+                System.err.printf("Unable to read file '%s'. Error: %s%n", deckFilename, t);
                 System.exit(2);
             }
         } else if (args.length == 0) {
@@ -27,7 +27,7 @@ public class Main {
             System.exit(1);
         }
 
-        System.out.printf("Deck: %s%n", deck.getCards().stream().map(card -> card.formatAsString()).collect(Collectors.joining(",")));
+        System.out.printf("Deck: %s%n", deck.getCards().stream().map(Card::formatAsString).collect(Collectors.joining(",")));
         Game game = new Game(deck);
         game.playGame();
         System.out.println(game.getWinner() != null ? game.getWinner().getName() : "tie");

@@ -31,7 +31,7 @@ public class CardBundle {
         String[] values = new String[]{"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
         List<String> fullDeck = Arrays.stream(Suit.values()).flatMap(suit -> Arrays.stream(values).map(s -> suit.name() + s)).collect(Collectors.toList());
         Collections.shuffle(fullDeck);
-        return CardBundle.cardsFromStringList((fullDeck.stream().collect(Collectors.joining(","))));
+        return CardBundle.cardsFromStringList((String.join(",", fullDeck)));
     }
 
     public void addCard(Card card) {
