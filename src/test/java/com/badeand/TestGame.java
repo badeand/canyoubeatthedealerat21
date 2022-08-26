@@ -1,6 +1,7 @@
 package com.badeand;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -39,6 +40,13 @@ public class TestGame {
         testGame("CA,DA,C10,D10", "sam");
     }
 
+    @Test
+    public void testPopExceptionOnEmptyDeck() {
+        assertThrows(RuntimeException.class, () -> {
+            new CardBundle().pop();
+        });
+    }
+
     private void testGame(String list, String player) {
         List<Card> cards = CardBundle.cardsFromStringList(list);
         Game game = new Game(new CardBundle(cards));
@@ -49,14 +57,7 @@ public class TestGame {
     @Test
     public void demoTestMethod() {
 
-        assertEquals(7, Card.cardFromValue("C7").value());
-        assertEquals(10, Card.cardFromValue("D10").value());
-        assertEquals(10, Card.cardFromValue("DJ").value());
-        assertEquals(10, Card.cardFromValue("HQ").value());
-        assertEquals(10, Card.cardFromValue("SK").value());
-        assertEquals(11, Card.cardFromValue("SA").value());
 
-        assertEquals("C7", Card.cardFromValue("C7").formatAsString());
 
         {
             Player player = new Player("sam");

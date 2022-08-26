@@ -39,7 +39,7 @@ public class CardBundle {
     public int sumValue() {
         // TODO: Use reduce
         AtomicInteger sum = new AtomicInteger();
-        cards.forEach(card -> sum.addAndGet(card.value()));
+        cards.forEach(card -> sum.addAndGet(card.calcValue()));
         return sum.get();
     }
 
