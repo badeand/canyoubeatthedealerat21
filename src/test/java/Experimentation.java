@@ -3,7 +3,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -15,6 +14,7 @@ public class Experimentation {
     public void demoTestMethod() {
 
         assertEquals(7, cardFromValue("C7").value());
+        assertEquals(10, cardFromValue("D10").value());
         assertEquals(10, cardFromValue("DJ").value());
         assertEquals(10, cardFromValue("HQ").value());
         assertEquals(10, cardFromValue("SK").value());
@@ -51,6 +51,57 @@ public class Experimentation {
             player.dealCards(cardsFromValues(new String[]{"DQ", "HA"}));
             assertEquals(true, player.hasBlackjack());
         }
+
+        {
+            Deck deck = new Deck(cardsFromValues(new String[]{"C1", "CA", "S7", "D5"}));
+            assertEquals("C1, CA, S7, D5", cardsToString(deck.getCards()));
+
+            assertEquals("C1", deck.pop().formatAsString());
+            assertEquals("CA", deck.pop().formatAsString());
+            assertEquals("S7", deck.pop().formatAsString());
+            assertEquals("D5", deck.pop().formatAsString());
+            assertEquals(0, deck.getCards().size());
+        }
+
+        {
+            Deck deck = new Deck(cardsFromValues(new String[]{"C1", "CA", "S7", "D5", "C1", "S1", "C1", "S4", "C3", "S2", "C1", "S1", "C1", "S1"}));
+            Player sam = new Player("sam");
+            Player dealer = new Player("dealer");
+            sam.deal(deck.pop());
+            dealer.deal(deck.pop());
+            sam.deal(deck.pop());
+            dealer.deal(deck.pop());
+            assertEquals(8, sam.sumValue());
+            assertEquals(16, dealer.sumValue());
+
+            System.out.println(String.format("sam has: %s", sam.sumValue()));
+            while (sam.sumValue() < 17) {
+                Card card = deck.pop();
+                sam.deal(card);
+                System.out.println(String.format("sam gets card: %s, has: %s", card.formatAsString(), sam.sumValue()));
+            }
+            assertEquals(18, sam.sumValue());
+
+            System.out.println(String.format("dealer has: %s", dealer.sumValue()));
+            while (dealer.sumValue() <= sam.sumValue()) {
+                Card card = deck.pop();
+                dealer.deal(card);
+                System.out.println(String.format("dealer gets card: %s, has: %s", card.formatAsString(), dealer.sumValue()));
+            }
+            assertEquals(18, sam.sumValue());
+
+            Player winner = null;
+
+            if (sam.sumValue() > dealer.sumValue()) {
+                winner = sam;
+            }
+
+            if (dealer.sumValue() > sam.sumValue()) {
+                winner = dealer;
+            }
+
+            System.out.println(String.format("Winner: %s", winner != null ? winner.name : "tie"));
+        }
     }
 
     private List<Card> cardsFromValues(String[] strings) {
@@ -63,12 +114,38 @@ public class Experimentation {
         return new Card(Suit.valueOf(s.substring(0, 1)), substring);
     }
 
+    String cardsToString(List<Card> cards1) {
+        String collect = cards1.stream().map(card -> card.formatAsString()).collect(Collectors.joining(", "));
+        return collect;
+    }
+
     enum Suit {
         C, D, H, S
     }
 
     class Deck {
 
+        private List<Card> cards;
+
+        public Deck(List<Card> cards) {
+            this.cards = cards;
+        }
+
+        public List<Card> getCards() {
+            return cards;
+        }
+
+        public Card pop() {
+
+            if (cards.size() > 0) {
+                Card poppedCard = cards.get(0);
+                cards.remove(poppedCard);
+                return poppedCard;
+            } else {
+                // TODO: Assert
+                throw new RuntimeException("Unable to pop. Deck is empty");
+            }
+        }
     }
 
     class Player {
@@ -104,7 +181,7 @@ public class Experimentation {
         }
 
         public String formatCards() {
-            String collect = cards.stream().map(card -> card.formatAsString()).collect(Collectors.joining(", "));
+            String collect = cardsToString(cards);
             return String.format("%s: %s", name, collect);
         }
     }
