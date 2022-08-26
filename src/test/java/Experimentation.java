@@ -1,7 +1,8 @@
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -19,26 +20,41 @@ public class Experimentation {
         assertEquals(10, cardFromValue("SK").value());
         assertEquals(11, cardFromValue("SA").value());
 
+        assertEquals("C7", cardFromValue("C7").formatAsString());
+
         {
-            Player player = new Player();
+            Player player = new Player("sam");
             player.dealCards(cardsFromValues(new String[]{"C7", "SK"}));
             assertEquals(17, player.sumValue());
+            assertEquals("sam: C7, SK", player.formatCards());
         }
 
         {
-            Player player = new Player();
+            Player player = new Player("sam");
+            player.dealCards(cardsFromValues(new String[]{"C7", "SK", "D5"}));
+            assertEquals("sam: C7, SK, D5", player.formatCards());
+        }
+
+        {
+            Player player = new Player("sam");
+            player.dealCards(cardsFromValues(new String[]{"H9"}));
+            assertEquals("sam: H9", player.formatCards());
+        }
+
+        {
+            Player player = new Player("ken");
             player.dealCards(cardsFromValues(new String[]{"CA", "HA"}));
             assertEquals(true, player.isBust());
         }
         {
-            Player player = new Player();
+            Player player = new Player("dealer");
             player.dealCards(cardsFromValues(new String[]{"DQ", "HA"}));
             assertEquals(true, player.hasBlackjack());
         }
     }
 
-    private Set<Card> cardsFromValues(String[] strings) {
-        Set<Card> cards = Arrays.stream(strings).map(s -> cardFromValue(s)).collect(Collectors.toSet());
+    private List<Card> cardsFromValues(String[] strings) {
+        List<Card> cards = Arrays.stream(strings).map(s -> cardFromValue(s)).collect(Collectors.toList());
         return cards;
     }
 
@@ -51,14 +67,24 @@ public class Experimentation {
         C, D, H, S
     }
 
+    class Deck {
+
+    }
+
     class Player {
-        private Set<Card> cards = new HashSet<>();
+
+        private String     name;
+        private List<Card> cards = new ArrayList<>();
+
+        public Player(String name) {
+            this.name = name;
+        }
 
         void deal(Card card) {
             cards.add(card);
         }
 
-        void dealCards(Set<Card> newCards) {
+        void dealCards(List<Card> newCards) {
             newCards.stream().forEach(card -> deal(card));
         }
 
@@ -75,6 +101,11 @@ public class Experimentation {
 
         public boolean hasBlackjack() {
             return sumValue() == 21;
+        }
+
+        public String formatCards() {
+            String collect = cards.stream().map(card -> card.formatAsString()).collect(Collectors.joining(", "));
+            return String.format("%s: %s", name, collect);
         }
     }
 
@@ -100,6 +131,10 @@ public class Experimentation {
                 }
                 throw new RuntimeException(String.format("Illega value: %s ", value));
             }
+        }
+
+        public String formatAsString() {
+            return suit.name() + value;
         }
     }
 }
