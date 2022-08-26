@@ -23,7 +23,7 @@ public class CardBundle {
         return newCards.stream().map(Card::formatAsString).collect(Collectors.joining(", "));
     }
 
-    public static CardBundle cardsFromStringList(String stringList) {
+    public static CardBundle parse(String stringList) {
         return new CardBundle(Arrays.stream(stringList.split(",")).map(s -> s.trim().toUpperCase(Locale.ROOT)).map(Card::cardFromValue).collect(Collectors.toList()));
     }
 
@@ -31,7 +31,7 @@ public class CardBundle {
         String[] values = new String[]{"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
         List<String> fullDeck = Arrays.stream(Suit.values()).flatMap(suit -> Arrays.stream(values).map(s -> suit.name() + s)).collect(Collectors.toList());
         Collections.shuffle(fullDeck);
-        return CardBundle.cardsFromStringList((String.join(",", fullDeck)));
+        return CardBundle.parse((String.join(",", fullDeck)));
     }
 
     public void addCard(Card card) {

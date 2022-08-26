@@ -1,7 +1,5 @@
 package com.badeand;
 
-import java.util.List;
-
 public class Player {
 
     private final String name;
@@ -20,8 +18,8 @@ public class Player {
         cardBundle.addCard(card);
     }
 
-    public void dealCards(List<Card> newCards) {
-        newCards.forEach(this::deal);
+    public void dealCards(CardBundle cardBundle) {
+        cardBundle.getCards().forEach(this::deal);
     }
 
     public boolean isBust() {
@@ -32,9 +30,8 @@ public class Player {
         return cardBundle.sumValue() == 21;
     }
 
-    public String formatCards() {
-        String collect = cardBundle.formatAsString();
-        return String.format("%s: %s", name, collect);
+    public String formatCardsAsStringList() {
+        return String.format("%s: %s", name, cardBundle.formatAsString());
     }
 
     public int sumValue() {

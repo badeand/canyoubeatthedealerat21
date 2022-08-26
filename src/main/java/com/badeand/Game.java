@@ -3,12 +3,20 @@ package com.badeand;
 import java.util.Optional;
 
 public class Game {
-    final Player     sam    = new Player("sam");
-    final Player     dealer = new Player("dealer");
-    final CardBundle cardBundle;
+    private final Player sam    = new Player("sam");
+    private final Player dealer = new Player("dealer");
+    private final CardBundle cardBundle;
 
     public Game(CardBundle cardBundle) {
         this.cardBundle = cardBundle;
+    }
+
+    public Player getSam() {
+        return sam;
+    }
+
+    public Player getDealer() {
+        return dealer;
     }
 
     public Optional<Player> playGame() {

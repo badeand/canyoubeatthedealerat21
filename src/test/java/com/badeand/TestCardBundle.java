@@ -8,7 +8,7 @@ public class TestCardBundle {
 
     @Test
     public void popCardBundle() {
-        CardBundle cardBundle = CardBundle.cardsFromStringList("C2,CA,S7,D5");
+        CardBundle cardBundle = CardBundle.parse("C2,CA,S7,D5");
         assertEquals("C2, CA, S7, D5", CardBundle.cardsToString(cardBundle.getCards()));
         assertEquals("C2", cardBundle.pop().formatAsString());
         assertEquals("CA, S7, D5", CardBundle.cardsToString(cardBundle.getCards()));

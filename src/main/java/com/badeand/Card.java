@@ -1,8 +1,8 @@
 package com.badeand;
 
 public class Card {
-    final Suit   suit;
-    final String value;
+    private final Suit   suit;
+    private final String value;
 
     public Card(Suit suit, String value) {
         this.suit = suit;
