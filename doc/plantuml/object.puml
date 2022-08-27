@@ -1,5 +1,5 @@
 @startuml
-skinparam shadowing true
+
 
 object Result {
 }

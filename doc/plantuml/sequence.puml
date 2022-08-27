@@ -1,0 +1,36 @@
+@startuml
+
+participant Actor
+Actor -> Main : main
+activate Main
+Main -> CardBundle : parse
+activate CardBundle
+
+alt if file is provided
+    CardBundle -> Card : cardFromValue
+    activate Card
+    Card --> CardBundle
+    deactivate Card
+    CardBundle --> Main
+end
+
+alt if NOT file is provided
+    deactivate CardBundle
+    Main -> CardBundle : shuffledDeck
+    activate CardBundle
+    CardBundle --> Main
+    deactivate CardBundle
+end
+
+
+Main -> Game : playGame
+activate Game
+
+Game -> Player: draw
+activate Player
+deactivate Player
+
+Game --> Main
+
+
+@enduml
