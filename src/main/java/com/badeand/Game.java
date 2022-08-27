@@ -41,7 +41,7 @@ public class Game {
             sam.deal(cardBundle.pop());
         }
 
-        while (dealer.sumValue() <= sam.sumValue() && !dealer.isBust() && dealer.sumValue() < 21) {
+        while (dealer.sumValue() <= sam.sumValue() && !dealer.isBust()) {
             dealer.deal(cardBundle.pop());
         }
 

@@ -16,17 +16,17 @@ public class TestGame {
 
     @Test
     public void samWinsIfDealerIsBust() {
-        testGame("S5,C10,S5,C5,S9,CQ,C10", "sam");
+        testGame("S5,C10,S5,C5,S9,CQ", "sam");
     }
 
     @Test
-    public void bothPlayersAreBust() {
+    public void dealerWinsIfbothPlayersAreBust() {
         testGame("CA,DA,HA,SA", "dealer");
     }
 
     @Test
     public void dealerWinsIfSamIsBust() {
-        testGame("CA,C10, DA, DA, C2,S2,C2,S4,C3,S2,C2,S2,C2,S2", "dealer");
+        testGame("CA,C10, DA, DA", "dealer");
     }
 
     @Test
@@ -35,12 +35,17 @@ public class TestGame {
     }
 
     @Test
+    public void highestScoreWins() {
+        testGame("S2,S2,S2,S2,  SQ,S3,  SQ,S4", "dealer");
+    }
+
+    @Test
     public void dealerWinsIfBlackjackOnInitialHand() {
         testGame("C9,CA,C8,C10", "dealer");
     }
 
     @Test
-    public void samWinsIfBotHasBlackjackOnInitialHand() {
+    public void samWinsIfBothHasBlackjackOnInitialHand() {
         testGame("CA,DA,C10,D10", "sam");
     }
 
