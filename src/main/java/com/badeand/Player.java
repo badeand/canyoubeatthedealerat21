@@ -18,10 +18,6 @@ public class Player {
         hand.addCard(card);
     }
 
-    public void dealCards(CardBundle cardBundle) {
-        cardBundle.getCards().forEach(this::deal);
-    }
-
     public boolean isBust() {
         return hand.sumValue() > 21;
     }

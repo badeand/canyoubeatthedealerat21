@@ -27,9 +27,12 @@ public class CardBundle {
         return new CardBundle(Arrays.stream(stringList.split(",")).map(s -> s.trim().toUpperCase(Locale.ROOT)).map(Card::cardFromValue).collect(Collectors.toList()));
     }
 
-    public static CardBundle shuffeledDeck() {
+    public static CardBundle shuffledDeck() {
         String[] values = new String[]{"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
-        List<String> fullDeck = Arrays.stream(Suit.values()).flatMap(suit -> Arrays.stream(values).map(s -> suit.name() + s)).collect(Collectors.toList());
+        List<String> fullDeck = Arrays.stream(Suit.values())
+                .flatMap(suit -> Arrays.stream(values)
+                        .map(s -> suit.name() + s))
+                .collect(Collectors.toList());
         Collections.shuffle(fullDeck);
         return CardBundle.parse((String.join(",", fullDeck)));
     }
@@ -39,14 +42,16 @@ public class CardBundle {
     }
 
     public int sumValue() {
-        return cards.stream().map(Card::calcValue).reduce(Integer::sum).orElse(0);
+        return cards.stream()
+                .map(Card::calcValue).reduce(Integer::sum)
+                .orElse(0);
     }
 
     public List<Card> getCards() {
         return cards;
     }
 
-    public Card pop() {
+    public Card draw() {
         Card topCard = cards.stream()
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Unable to pop. Deck is empty"));

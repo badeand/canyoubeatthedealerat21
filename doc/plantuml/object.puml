@@ -1,7 +1,7 @@
 @startuml
 skinparam shadowing true
 
-object Game {
+object Result {
 }
 
 object Player {
@@ -10,20 +10,22 @@ object Player {
 object CardBundle {
 }
 
-object Suit {
+enum Suit {
 }
 
 object Card {
     value
 }
 
+Game - Result : creates
+
 CardBundle -- "0..*"  Card : cards
 Card --> "1"  Suit : suit
 
-Game --> "1" CardBundle : deck
-Game --> "1" Player : sam
-Game --> "1" Player : dealer
-Game --> "0..1" Player : winner
+Result --> "1" CardBundle : deck
+Result --> "1" Player : sam
+Result --> "1" Player : dealer
+Result --> "0..1" Player : winner
 Player --> "1" CardBundle : hand
 
 @enduml

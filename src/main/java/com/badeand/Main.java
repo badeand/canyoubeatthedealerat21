@@ -20,10 +20,12 @@ public class Main {
                 System.exit(2);
             }
         } else if (args.length == 0) {
-            System.out.println("Using random shuffeled deck");
-            deck = CardBundle.shuffeledDeck();
+            System.out.println("Using random  shuffled deck");
+            deck = CardBundle.shuffledDeck();
         } else {
-            System.err.printf("Illegal arguments. Excpected one or none arguments. Got %s: %s%n", args.length, String.join(" ", args));
+            System.err.printf("Illegal arguments. Expected one or none arguments. Got %s: %s%n",
+                    args.length,
+                    String.join(" ", args));
             System.exit(1);
         }
 

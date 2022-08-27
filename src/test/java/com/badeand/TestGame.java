@@ -3,8 +3,6 @@ package com.badeand;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-import java.util.Optional;
-
 import org.junit.Test;
 
 public class TestGame {
@@ -20,7 +18,7 @@ public class TestGame {
     }
 
     @Test
-    public void dealerWinsIfbothPlayersAreBust() {
+    public void dealerWinsIfBothPlayersAreBust() {
         testGame("CA,DA,HA,SA", "dealer");
     }
 
@@ -51,7 +49,7 @@ public class TestGame {
 
     @Test
     public void testPopExceptionOnEmptyDeck() {
-        assertThrows(RuntimeException.class, () -> new CardBundle().pop());
+        assertThrows(RuntimeException.class, () -> new CardBundle().draw());
     }
 
     private void testGame(String list, String player) {
