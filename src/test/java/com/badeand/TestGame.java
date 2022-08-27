@@ -55,8 +55,7 @@ public class TestGame {
     }
 
     private void testGame(String list, String player) {
-        Game game = new Game(CardBundle.parse(list));
-        Optional<Player> winner = game.playGame();
-        assertEquals(player, winner.orElseThrow(() -> new RuntimeException("no winner")).getName());
+        Result result = Game.playGame(CardBundle.parse(list));
+        assertEquals(player, result.getWinner().orElseThrow(() -> new RuntimeException("no winner")).getName());
     }
 }

@@ -2,7 +2,6 @@ package com.badeand;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -29,10 +28,8 @@ public class Main {
         }
 
         System.out.printf("Deck: %s%n", deck.getCards().stream().map(Card::formatAsString).collect(Collectors.joining(",")));
-        Game game = new Game(deck);
-        Optional<Player> winner = game.playGame();
-        System.out.println(winner.map(Player::getName).orElse("tie"));
-        System.out.println(game.getSam().formatCardsAsStringList());
-        System.out.println(game.getDealer().formatCardsAsStringList());
+
+        Result result = Game.playGame(deck);
+        System.out.println(result.formatAsMultilineString());
     }
 }

@@ -3,38 +3,26 @@ package com.badeand;
 import java.util.Optional;
 
 public class Game {
-    private final Player     sam    = new Player("sam");
-    private final Player     dealer = new Player("dealer");
-    private final CardBundle cardBundle;
 
-    public Game(CardBundle cardBundle) {
-        this.cardBundle = cardBundle;
-    }
+    public static Result playGame(CardBundle cardBundle) {
+        final Player sam = new Player("sam");
+        final Player dealer = new Player("dealer");
 
-    public Player getSam() {
-        return sam;
-    }
-
-    public Player getDealer() {
-        return dealer;
-    }
-
-    public Optional<Player> playGame() {
         sam.deal(cardBundle.pop());
         dealer.deal(cardBundle.pop());
         sam.deal(cardBundle.pop());
         dealer.deal(cardBundle.pop());
 
         if (sam.isBust() && dealer.isBust()) {
-            return Optional.of(dealer);
+            return cerateResult(sam, dealer, dealer);
         }
 
         if (sam.hasBlackjack()) {
-            return Optional.of(sam);
+            return cerateResult(sam, dealer, sam);
         }
 
         if (dealer.hasBlackjack()) {
-            return Optional.of(dealer);
+            return cerateResult(sam, dealer, dealer);
         }
 
         while (sam.sumValue() < 17 && !sam.isBust()) {
@@ -46,11 +34,15 @@ public class Game {
         }
 
         if (!sam.isBust() && sam.sumValue() > (!dealer.isBust() ? dealer.sumValue() : -1)) {
-            return Optional.of(sam);
+            return cerateResult(sam, dealer, sam);
         } else if (!dealer.isBust() && dealer.sumValue() > (!sam.isBust() ? sam.sumValue() : -1)) {
-            return Optional.of(dealer);
+            return cerateResult(sam, dealer, dealer);
         } else {
-            return Optional.empty();
+            return new Result(sam, dealer, Optional.empty());
         }
+    }
+
+    private static Result cerateResult(Player sam, Player dealer, Player winner) {
+        return new Result(sam, dealer, Optional.of(winner));
     }
 }
