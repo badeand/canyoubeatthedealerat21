@@ -1,8 +1,6 @@
 @startuml
 
-participant Actor
-Actor -> Main : main
-activate Main
+ activate Main
 Main -> CardBundle : parse
 activate CardBundle
 
@@ -12,9 +10,7 @@ alt if file is provided
     Card --> CardBundle
     deactivate Card
     CardBundle --> Main
-end
-
-alt if NOT file is provided
+else file not provided
     deactivate CardBundle
     Main -> CardBundle : shuffledDeck
     activate CardBundle
@@ -23,14 +19,37 @@ alt if NOT file is provided
 end
 
 
+group#Khaki game loop
+
 Main -> Game : playGame
 activate Game
 
-Game -> Player: draw
+Game -> Player: draw(Card)
+note right: adds a card to \nplayers hand
 activate Player
+Game <- Player
 deactivate Player
 
-Game --> Main
+Game -> Player: isBust
+note right: true if sum points\nis over 21
+activate Player
+Game <- Player
+deactivate Player
 
+Game -> Player: hasBlackjack
+note right: true if sum points \nis 21
+activate Player
+Game <- Player
+deactivate Player
+
+Game -> Player: sumValue
+note right: Returns the total \npoints of card \nin hand
+activate Player
+Game <- Player
+deactivate Player
+
+Game --> Main: Result
+
+end group
 
 @enduml

@@ -1,4 +1,9 @@
 
+
+# Sytem requirements
+- Maven 3.5 or later
+- Java 11 or later
+
 # How to build application
 
 Package the app using maven:
@@ -8,6 +13,8 @@ mvn clean package
 ```
 
 # How to run application
+
+_The following instructions are for Mac, Linux or Windows running WSL._
 
 Execute the jar i ```target``` directory:
 
